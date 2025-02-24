@@ -1,0 +1,27 @@
+.container {
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  /* padding: 30px; */
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 10px;
+  background-color: #b7ffe6;
+  width: 100%;
+  height: 100%;
+}
+
+.left {
+  gap: 30px;
+  color: black;
+}
+
+.heading {
+  font-weight: 600;
+  color: #1ee29c;
+  font-size: larger;
+}
