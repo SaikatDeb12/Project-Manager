@@ -38,11 +38,17 @@
   color: white;
   border-radius: 10px;
   font-size: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .left button:hover {
   background-color: #3ffdbb;
   transition: 50ms;
+}
+
+.icon {
+  margin: 10px;
 }
 
 .right {
