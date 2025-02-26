@@ -6,7 +6,8 @@ const Auth = ({ signup }) => {
     <div className={styles.container}>
       <form className={styles.form}>
         <p className={styles.heading}>{signup ? "signUp" : "login"}</p>
-        <InputControl />
+        <InputControl label={"Name: "} />
+        <InputControl label={"Password: "} isPassword={true} />
       </form>
     </div>
   );
