@@ -1,0 +1,24 @@
+.container {
+  gap: 8px;
+}
+
+.container label {
+  font-weight: 500;
+  color: #252525;
+}
+
+.container input {
+  border: 2px solid #eee;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+}
+
+.container input:hover {
+  border: 2px solid gray;
+  transition: 200ms;
+}
+
+.container input:focus {
+  border: 2px solid cyan;
+}
