@@ -2,7 +2,7 @@
   height: 100vh;
   background: linear-gradient(
     to bottom right,
-    rgb(14, 212, 182),
+    rgb(14, 212, 146),
     rgb(129, 247, 229)
   );
   display: flex;
@@ -21,7 +21,7 @@
 .form {
   border-radius: 10px;
   background-color: white;
-  height: 50%;
+  height: fit-content;
   width: 22%;
   padding: 20px;
 }
@@ -39,4 +39,8 @@
 
 .submit:hover {
   background-color: rgb(142, 223, 210);
+}
+
+.link {
+  cursor: pointer;
 }
