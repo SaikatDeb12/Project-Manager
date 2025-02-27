@@ -12,7 +12,7 @@ const InputControl = ({ label, isPassword, ...props }) => {
       <div className={styles.inputContainer}>
         <input
           type={toggle ? "password" : "text"}
-          placeholder="Enter name"
+          placeholder={props.placeholder}
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
