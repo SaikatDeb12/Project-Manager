@@ -1,19 +1,26 @@
 .container {
-  position: relative;
-  gap: 8px;
+  /* position: relative; */
+  width: 100%;
 }
 
 .container label {
   font-weight: 500;
   color: #252525;
-  margin: 10px;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .inputContainer input {
+  width: 100%;
   border: 2px solid #eee;
   border-radius: 5px;
-  padding: 10px;
   outline: none;
+  margin-bottom: 20px;
+  padding: 5px;
 }
 
 .inputContainer input:hover {
@@ -22,18 +29,12 @@
 }
 
 .inputContainer input:focus {
-  border: 2px solid cyan;
+  border: 2px solid rgb(0, 200, 200);
 }
 
-.inputContainer {
-  position: relative;
-  width: fit-content;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-}
-
-.inputContainer .icon {
+.icon {
   position: absolute;
-  padding: 10px;
+  top: 15%;
+  right: 0;
+  padding: 0 3%;
 }
