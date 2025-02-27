@@ -25,7 +25,9 @@ const Auth = ({ signup }) => {
           placeholder={"Enter the password"}
           {...register("password")}
         />
-        <input type="submit" />
+        <input type="submit" className={styles.submit} />
+        <span>Already have a account? </span>
+        <span style={{ color: "rgb(14, 212, 182)" }}>Login here</span>
       </form>
     </div>
   );
