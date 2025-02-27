@@ -9,18 +9,22 @@ const InputControl = ({ label, isPassword, ...props }) => {
   return (
     <div className={styles.container}>
       <label>{label}</label>
-      <input
-        type={toggle ? "password" : "text"}
-        placeholder="Enter name"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      {isPassword &&
-        (toggle ? (
-          <LuEyeClosed className="eye" onClick={() => onToggle(!toggle)} />
-        ) : (
-          <IoMdEye onClick={() => onToggle(!toggle)} />
-        ))}
+      <div className={styles.inputContainer}>
+        <input
+          type={toggle ? "password" : "text"}
+          placeholder="Enter name"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <div className={styles.icon}>
+          {isPassword &&
+            (toggle ? (
+              <LuEyeClosed onClick={() => onToggle(!toggle)} />
+            ) : (
+              <IoMdEye onClick={() => onToggle(!toggle)} />
+            ))}
+        </div>
+      </div>
     </div>
   );
 };

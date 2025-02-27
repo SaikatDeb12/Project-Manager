@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   gap: 8px;
 }
 
@@ -8,18 +9,31 @@
   margin: 10px;
 }
 
-.container input {
+.inputContainer input {
   border: 2px solid #eee;
   border-radius: 5px;
   padding: 10px;
   outline: none;
 }
 
-.container input:hover {
-  border: 2px solid gray;
+.inputContainer input:hover {
+  border: 2px solid rgb(136, 136, 136);
   transition: 200ms;
 }
 
-.container input:focus {
+.inputContainer input:focus {
   border: 2px solid cyan;
+}
+
+.inputContainer {
+  position: relative;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.inputContainer .icon {
+  position: absolute;
+  padding: 10px;
 }
