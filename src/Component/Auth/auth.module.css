@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: large;
 }
 
 .heading {
@@ -22,8 +23,9 @@
   border-radius: 10px;
   background-color: white;
   height: fit-content;
-  width: 22%;
+  width: 30%;
   padding: 20px;
+  padding-bottom: 40px;
 }
 
 .submit {
@@ -35,6 +37,10 @@
   margin-bottom: 20px;
   border-radius: 5px;
   color: rgb(248, 248, 250);
+}
+
+.submit:disabled {
+  background-color: gray;
 }
 
 .submit:hover {

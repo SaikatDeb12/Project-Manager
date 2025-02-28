@@ -11,7 +11,7 @@ const InputControl = ({
   name,
   errors,
 }) => {
-  const [toggle, onToggle] = useState(isPassword); //true
+  const [toggle, onToggle] = useState(isPassword);
   return (
     <div className={styles.container}>
       <label>{label}</label>
@@ -30,8 +30,8 @@ const InputControl = ({
               <IoMdEye onClick={() => onToggle(!toggle)} />
             ))}
         </div>
-        {errors && <p>{errors.message}</p>}
       </div>
+      {errors && <span className={styles.error}>{errors.message}</span>}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 .container {
-  /* position: relative; */
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .container label {
@@ -16,11 +16,11 @@
 
 .inputContainer input {
   width: 100%;
+  font-size: medium;
   border: 2px solid #eee;
   border-radius: 5px;
   outline: none;
-  margin-bottom: 20px;
-  padding: 5px;
+  padding: 10px;
 }
 
 .inputContainer input:hover {
@@ -34,7 +34,12 @@
 
 .icon {
   position: absolute;
-  top: 15%;
+  top: 30%;
   right: 0;
   padding: 0 3%;
+}
+
+.error {
+  color: red;
+  font-size: small;
 }
