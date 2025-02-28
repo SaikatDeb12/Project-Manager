@@ -4,7 +4,7 @@ import styles from "./auth.module.css";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { auth } from "../../firebase";
+import { auth } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 
