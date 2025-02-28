@@ -29,7 +29,7 @@
 }
 
 .inputContainer input:focus {
-  border: 2px solid rgb(0, 200, 200);
+  border: 2px solid rgb(0, 50, 200);
 }
 
 .icon {

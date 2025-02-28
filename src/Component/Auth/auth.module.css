@@ -2,8 +2,8 @@
   height: 100vh;
   background: linear-gradient(
     to bottom right,
-    rgb(14, 212, 146),
-    rgb(129, 247, 229)
+    rgb(14, 129, 212),
+    rgb(23, 24, 84)
   );
   display: flex;
   justify-content: center;
@@ -29,16 +29,16 @@
 .submit {
   width: 100%;
   outline: none;
-  background-color: rgb(14, 212, 182);
+  background-color: rgb(14, 47, 212);
   border: none;
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 5px;
-  color: rgb(213, 250, 250);
+  color: rgb(248, 248, 250);
 }
 
 .submit:hover {
-  background-color: rgb(142, 223, 210);
+  opacity: 0.8;
 }
 
 .link {

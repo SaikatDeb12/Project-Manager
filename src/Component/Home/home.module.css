@@ -10,7 +10,11 @@
   align-items: center;
   justify-content: space-evenly;
   gap: 10px;
-  background-color: #b7ffe6;
+  background: linear-gradient(
+    to bottom right,
+    rgb(24, 134, 213),
+    rgb(23, 24, 84)
+  );
   width: 100%;
   height: 100%;
 }
@@ -22,7 +26,7 @@
 
 .heading {
   font-weight: 600;
-  color: #1ee29c;
+  color: #001aff;
   font-size: 50px;
 }
 
@@ -32,7 +36,7 @@
 }
 
 .left button {
-  background: #1ee29c;
+  background: #4b78ff;
   border: none;
   padding: 15px 30px;
   color: white;
@@ -43,7 +47,7 @@
 }
 
 .left button:hover {
-  background-color: #3ffdbb;
+  opacity: 0.8;
   transition: 50ms;
 }
 
