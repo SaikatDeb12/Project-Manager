@@ -10,8 +10,8 @@ import { useState } from "react";
 
 const Auth = ({ signup }) => {
   const schema = z.object({
-    name: z.string().min(1, { message: "required" }),
-    email: z.string().email({ message: "invalid email" }),
+    name: z.string().min(1, { message: "Required" }),
+    email: z.string().email({ message: "Invalid email" }),
     password: z
       .string()
       .min(4, { message: "Password must be atleast 4 characters" }),
@@ -35,7 +35,7 @@ const Auth = ({ signup }) => {
       data.email,
       data.password
     );
-    console.log(res);
+    console.log("Data: ", res);
     submitButtonDisabled(false);
   };
 
