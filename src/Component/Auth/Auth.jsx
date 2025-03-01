@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputControl from "../InputControl/InputControl";
 import styles from "./auth.module.css";
 import { useForm } from "react-hook-form";
@@ -28,6 +28,8 @@ const Auth = ({ signup }) => {
     else handleLogin();
   };
 
+  const navigate = useNavigate();
+
   const handleSignup = async (data) => {
     submitButtonDisabled(true);
     const res = await createUserWithEmailAndPassword(
@@ -36,6 +38,7 @@ const Auth = ({ signup }) => {
       data.password
     );
     console.log("Data: ", res);
+
     const userId = res.user.uid;
     await updateUserDb(
       {
@@ -45,6 +48,7 @@ const Auth = ({ signup }) => {
       userId
     );
     submitButtonDisabled(false);
+    navigate("/login");
   };
 
   const handleLogin = () => {};
