@@ -15,13 +15,22 @@ const Auth = ({ signup }) => {
   const [submitButton, submitButtonDisabled] = useState(false);
   const navigate = useNavigate();
 
-  const schema = z.object({
-    name: z.string().optional(),
+  const loginSchema = z.object({
     email: z.string().email({ message: "Invalid email" }),
     password: z
       .string()
       .min(4, { message: "Password must be atleast 4 characters" }),
   });
+
+  const signupSchema = z.object({
+    name: z.string().min(1, { message: "Required name" }),
+    email: z.string().email({ message: "Invalid email" }),
+    password: z
+      .string()
+      .min(4, { message: "Password must be atleast 4 characters" }),
+  });
+
+  const schema = signup ? signupSchema : loginSchema;
 
   const {
     register,
@@ -30,7 +39,6 @@ const Auth = ({ signup }) => {
   } = useForm({ resolver: zodResolver(schema) });
 
   const mySubmit = (data) => {
-    console.log("state of signup: ", signup);
     if (signup) handleSignup(data);
     else handleLogin(data);
   };
@@ -60,7 +68,7 @@ const Auth = ({ signup }) => {
     submitButtonDisabled(true);
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      console.log("signing In");
+      console.log("signing in");
       submitButtonDisabled(false);
       navigate("/");
     } catch (err) {
