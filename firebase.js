@@ -30,4 +30,11 @@ const updateUserDb = async (user, uid) => {
   await setDoc(docRef, { ...user });
 };
 
-export { app as default, auth, db, updateUserDb };
+const getUserData = async (uid) => {
+  const docRef = doc(db, "users", uid);
+  const res = await getDoc(docRef);
+  if (res.exists()) return res.data();
+  else return null;
+};
+
+export { app as default, auth, db, updateUserDb, getUserData };

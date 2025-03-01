@@ -13,7 +13,9 @@ const Home = () => {
       <div className={styles.header}>
         <div className={styles.left}>
           <p className={styles.heading}>Project Fair</p>
-          <p className={styles.desc}>Place to manage all your projects</p>
+          <p className={styles.desc}>
+            One stop destination for all software development projects
+          </p>
           <button onClick={handleNavigate}>
             Get Started
             <FaArrowRightLong className={styles.icon} />
