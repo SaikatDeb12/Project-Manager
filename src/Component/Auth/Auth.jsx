@@ -5,12 +5,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { auth, updateUserDb } from "../../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useState } from "react";
 
 const Auth = ({ signup }) => {
+  const [submitButton, submitButtonDisabled] = useState(false);
+  const navigate = useNavigate();
+
   const schema = z.object({
-    name: z.string().min(1, { message: "Required" }),
+    name: z.string().optional(),
     email: z.string().email({ message: "Invalid email" }),
     password: z
       .string()
@@ -24,11 +30,10 @@ const Auth = ({ signup }) => {
   } = useForm({ resolver: zodResolver(schema) });
 
   const mySubmit = (data) => {
+    console.log("state of signup: ", signup);
     if (signup) handleSignup(data);
-    else handleLogin();
+    else handleLogin(data);
   };
-
-  const navigate = useNavigate();
 
   const handleSignup = async (data) => {
     submitButtonDisabled(true);
@@ -51,9 +56,17 @@ const Auth = ({ signup }) => {
     navigate("/login");
   };
 
-  const handleLogin = () => {};
-
-  const [submitButton, submitButtonDisabled] = useState(false);
+  const handleLogin = async (data) => {
+    submitButtonDisabled(true);
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      console.log("signing In");
+      submitButtonDisabled(false);
+      navigate("/");
+    } catch (err) {
+      console.error("Error: ", err);
+    }
+  };
 
   return (
     <div className={styles.container}>
