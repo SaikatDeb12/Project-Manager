@@ -4,7 +4,7 @@ import styles from "./auth.module.css";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { auth } from "../../../firebase";
+import { auth, updateUserDb } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 
@@ -36,6 +36,14 @@ const Auth = ({ signup }) => {
       data.password
     );
     console.log("Data: ", res);
+    const userId = res.user.uid;
+    await updateUserDb(
+      {
+        name: data.name,
+        email: res.user.email,
+      },
+      userId
+    );
     submitButtonDisabled(false);
   };
 
