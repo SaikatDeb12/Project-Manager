@@ -4,20 +4,26 @@ import Home from "./Component/Home/Home";
 import Auth from "./Component/Auth/Auth";
 import { useEffect, useState } from "react";
 import { auth, getUserData } from "../firebase";
+import Spinner from "./Component/Spinner/Spinner";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userDetails, setUserDetails] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchUserDetails = async (uid) => {
     const details = await getUserData(uid);
     console.log("User details: ", details);
+    setIsLoading(true);
     setUserDetails(details);
   };
 
   useEffect(() => {
     const listener = auth.onAuthStateChanged((user) => {
-      if (!user) return;
+      if (!user) {
+        setIsLoading(true);
+        return;
+      }
 
       setIsAuthenticated(true);
       fetchUserDetails(user.uid);
@@ -28,20 +34,26 @@ function App() {
   return (
     <div className="app">
       <Router>
-        <Routes>
-          <Route
-            path="/"
-            element={<Home isAuthenticated={isAuthenticated} />}
-          />
-          {!isAuthenticated && (
-            <>
-              <Route path="/login" element={<Auth signup={false} />} />
-              <Route path="/signup" element={<Auth signup={true} />} />
-            </>
-          )}
-          <Route path="/account" element={<h1>account</h1>} />
-          <Route path="*" element={<h1>page not found</h1>} />
-        </Routes>
+        {isLoading ? (
+          <Routes>
+            <Route
+              path="/"
+              element={<Home isAuthenticated={isAuthenticated} />}
+            />
+            {!isAuthenticated && (
+              <>
+                <Route path="/login" element={<Auth signup={false} />} />
+                <Route path="/signup" element={<Auth signup={true} />} />
+              </>
+            )}
+            <Route path="/account" element={<h1>account</h1>} />
+            <Route path="*" element={<h1>page not found</h1>} />
+          </Routes>
+        ) : (
+          <div className="spinner">
+            <Spinner />
+          </div>
+        )}
       </Router>
     </div>
   );
