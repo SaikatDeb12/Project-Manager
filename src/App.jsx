@@ -4,7 +4,6 @@ import Home from "./Component/Home/Home";
 import Auth from "./Component/Auth/Auth";
 import { useEffect, useState } from "react";
 import { auth, getUserData } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,10 +29,18 @@ function App() {
     <div className="app">
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Auth signup={false} />} />
-          <Route path="/signup" element={<Auth signup={true} />} />
+          <Route
+            path="/"
+            element={<Home isAuthenticated={isAuthenticated} />}
+          />
+          {!isAuthenticated && (
+            <>
+              <Route path="/login" element={<Auth signup={false} />} />
+              <Route path="/signup" element={<Auth signup={true} />} />
+            </>
+          )}
           <Route path="/account" element={<h1>account</h1>} />
+          <Route path="*" element={<h1>page not found</h1>} />
         </Routes>
       </Router>
     </div>

@@ -2,10 +2,11 @@ import styles from "./home.module.css";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const Home = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate("/login");
+    if (isAuthenticated) navigate("/account");
+    else navigate("/login");
   };
 
   return (
@@ -17,7 +18,7 @@ const Home = () => {
             One stop destination for all software development projects
           </p>
           <button onClick={handleNavigate}>
-            Get Started
+            {isAuthenticated ? "Manage Your Projects" : "Get Started"}
             <FaArrowRightLong className={styles.icon} />
           </button>
         </div>
