@@ -23,6 +23,7 @@ function App() {
     const listener = auth.onAuthStateChanged((user) => {
       if (!user) {
         setIsLoading(true);
+        setIsAuthenticated(false);
         return;
       }
 
@@ -47,7 +48,12 @@ function App() {
                 <Route path="/signup" element={<Auth signup={true} />} />
               </>
             )}
-            <Route path="/account" element={<Account />} />
+            {isAuthenticated && (
+              <Route
+                path="/account"
+                element={<Account userDetails={userDetails} />}
+              />
+            )}
             <Route path="*" element={<h1>page not found</h1>} />
           </Routes>
         ) : (

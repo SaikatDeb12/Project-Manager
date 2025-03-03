@@ -4,22 +4,31 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { IoCameraOutline } from "react-icons/io5";
 import InputControl from "../InputControl/InputControl";
 import { useForm } from "react-hook-form";
+import { auth } from "../../../firebase";
+import { signOut } from "firebase/auth";
+import { Navigate, useNavigate } from "react-router-dom";
 
-const Account = () => {
+const Account = ({ userDetails }) => {
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   const mySubmit = (data) => {
     console.log(data);
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/");
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <p className={styles.heading}>
-          Welcome <span style={{ color: "black" }}>User</span>
+          Welcome <span style={{ color: "black" }}>{userDetails.name}</span>
         </p>
         <div className={styles.logout}>
-          <IoLogOutOutline /> Logout
+          <IoLogOutOutline onClick={handleLogout} /> Logout
         </div>
       </div>
 
@@ -38,7 +47,7 @@ const Account = () => {
                 <InputControl
                   label={"Name"}
                   isPassword={false}
-                  placeholder={"Enter your name"}
+                  placeholder={userDetails.name}
                   name={"name"}
                   register={register}
                 />
