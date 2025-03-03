@@ -29,10 +29,7 @@ const Account = () => {
           <div className={styles.left}>
             <div className={styles.image}>
               <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQjl3X3QecVwXnMQYLd6ZQfecKfsxGHKK_BJqq0hL6RbvDf64qbPKq7PXVhviV4r3Lbi9VoULPVVIPXRrFRNqWRZMsTeN8ba8NI06oRR9I" />
-              <IoCameraOutline
-                className="camera"
-                style={{ color: "white", fontSize: "25px" }}
-              />
+              <IoCameraOutline className={styles.camera} />
             </div>
           </div>
           <div className={styles.right}>
@@ -71,6 +68,9 @@ const Account = () => {
                   register={register}
                 />
               </form>
+            </div>
+            <div className={styles.save}>
+              <button>Save Changes</button>
             </div>
           </div>
         </div>

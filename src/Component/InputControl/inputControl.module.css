@@ -4,7 +4,7 @@
 }
 
 .container label {
-  font-weight: 500;
+  font-weight: 540;
   font-size: medium;
   color: #252525;
 }
@@ -13,6 +13,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  padding-top: 5px;
 }
 
 .inputContainer input {
