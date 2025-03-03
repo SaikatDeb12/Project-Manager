@@ -5,6 +5,7 @@ import Auth from "./Component/Auth/Auth";
 import { useEffect, useState } from "react";
 import { auth, getUserData } from "../firebase";
 import Spinner from "./Component/Spinner/Spinner";
+import Account from "./Component/Account/Account";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,7 +47,7 @@ function App() {
                 <Route path="/signup" element={<Auth signup={true} />} />
               </>
             )}
-            <Route path="/account" element={<h1>account</h1>} />
+            <Route path="/account" element={<Account />} />
             <Route path="*" element={<h1>page not found</h1>} />
           </Routes>
         ) : (

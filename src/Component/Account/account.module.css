@@ -1,0 +1,29 @@
+.container {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(
+    to bottom right,
+    rgb(14, 129, 212),
+    rgb(23, 24, 84)
+  );
+}
+
+.header {
+  color: #ebebeb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: rgb(78, 89, 235);
+}
+
+.heading {
+  font-size: 30px;
+  font-weight: 550;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
