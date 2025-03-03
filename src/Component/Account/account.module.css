@@ -4,7 +4,7 @@
   background: linear-gradient(
     to bottom right,
     rgb(14, 129, 212),
-    rgb(23, 24, 84)
+    rgb(58, 59, 140)
   );
 }
 
@@ -14,7 +14,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: rgb(78, 89, 235);
+  background-color: rgb(69, 145, 251);
+  margin-bottom: 30px;
+  /* box-shadow: 0px 10px 10px rgb(69, 145, 251); */
+  box-shadow: 0 10px 5px rgb(37, 78, 135);
 }
 
 .heading {
@@ -26,4 +29,44 @@
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 600;
+  padding: 30px;
+}
+
+.profile {
+  display: flex;
+  width: 100%;
+  padding: 30px;
+}
+
+.left {
+  width: 30%;
+}
+
+.image {
+  position: relative;
+}
+
+.image img {
+  margin: 20px;
+  border-radius: 120px;
+}
+
+.camera {
+  position: absolute;
+  top: 0;
+  color: white;
+  font-size: 25px;
+}
+
+.right {
+  width: 60%;
+}
+
+.form {
+  display: flex;
 }
