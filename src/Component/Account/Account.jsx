@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { auth } from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 const Account = ({ userDetails }) => {
   const { register, handleSubmit } = useForm();
@@ -21,6 +22,8 @@ const Account = ({ userDetails }) => {
     navigate("/");
   };
 
+  const imagePicker = useRef();
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -31,14 +34,17 @@ const Account = ({ userDetails }) => {
           <IoLogOutOutline onClick={handleLogout} /> Logout
         </div>
       </div>
-
+      <input type="file" style={{ display: "none" }} ref={imagePicker} />
       <div className={styles.section}>
         <div className={styles.title}>Your profile</div>
         <div className={styles.profile}>
           <div className={styles.left}>
             <div className={styles.image}>
               <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQjl3X3QecVwXnMQYLd6ZQfecKfsxGHKK_BJqq0hL6RbvDf64qbPKq7PXVhviV4r3Lbi9VoULPVVIPXRrFRNqWRZMsTeN8ba8NI06oRR9I" />
-              <IoCameraOutline className={styles.camera} />
+              <IoCameraOutline
+                className={styles.camera}
+                onClick={() => imagePicker.current.click()}
+              />
             </div>
           </div>
           <div className={styles.right}>
