@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./account.module.css";
 import { IoLogOutOutline, IoCameraOutline } from "react-icons/io5";
 import InputControl from "../InputControl/InputControl";
-import { useForm } from "react-hook-form";
 import { auth, uploadImage } from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const Account = ({ userDetails }) => {
-  const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const imagePicker = useRef();
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -21,9 +19,6 @@ const Account = ({ userDetails }) => {
     linkedin: userDetails.linkedin || "",
   });
   const [saveDetails, setSaveDetails] = useState(true);
-  const mySubmit = (data) => {
-    console.log(data);
-  };
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -58,7 +53,12 @@ const Account = ({ userDetails }) => {
     );
   };
 
-  console.log("Current imageUrl: ", imageUrl);
+  const handleSaveChanges = (e) => {
+    e.preventDefault();
+    console.log("Saving profile details:", userProfileDetails);
+    setSaveDetails(true);
+    // Add logic here to save `userProfileDetails` to your backend or Firebase if needed
+  };
 
   return (
     <div className={styles.container}>
@@ -106,14 +106,13 @@ const Account = ({ userDetails }) => {
             )}
           </div>
           <div className={styles.right}>
-            <div className={styles.row}>
-              <form onSubmit={handleSubmit(mySubmit)} className="form">
+            <form onSubmit={handleSaveChanges} className="form">
+              <div className={styles.row}>
                 <InputControl
                   label={"Name"}
                   isPassword={false}
                   placeholder={"Enter your name"}
                   name={"name"}
-                  register={register}
                   value={userProfileDetails.name}
                   onChange={(event) => {
                     setSaveDetails(false);
@@ -127,27 +126,23 @@ const Account = ({ userDetails }) => {
                   label={"Title"}
                   isPassword={false}
                   placeholder={"eg. Full stack developer"}
-                  name={"title"}
-                  register={register}
+                  name={"designation"} // Changed to match state key
                   value={userProfileDetails.designation}
                   onChange={(event) => {
                     setSaveDetails(false);
                     setUserProfileDetails((prevVal) => ({
                       ...prevVal,
-                      title: event.target.value,
+                      designation: event.target.value,
                     }));
                   }}
                 />
-              </form>
-            </div>
-            <div className={styles.row}>
-              <form onSubmit={handleSubmit(mySubmit)} className="form">
+              </div>
+              <div className={styles.row}>
                 <InputControl
                   label={"GitHub"}
                   isPassword={false}
                   placeholder={"Enter your github link"}
                   name={"github"}
-                  register={register}
                   value={userProfileDetails.github}
                   onChange={(event) => {
                     setSaveDetails(false);
@@ -162,7 +157,6 @@ const Account = ({ userDetails }) => {
                   isPassword={false}
                   placeholder={"Enter your LinkedIn link"}
                   name={"linkedin"}
-                  register={register}
                   value={userProfileDetails.linkedin}
                   onChange={(event) => {
                     setSaveDetails(false);
@@ -172,11 +166,13 @@ const Account = ({ userDetails }) => {
                     }));
                   }}
                 />
-              </form>
-            </div>
-            <div className={styles.save}>
-              <button disabled={saveDetails}>Save Changes</button>
-            </div>
+              </div>
+              <div className={styles.save}>
+                <button type="submit" disabled={saveDetails}>
+                  Save Changes
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

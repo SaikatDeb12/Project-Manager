@@ -6,12 +6,11 @@ import { IoMdEye } from "react-icons/io";
 const InputControl = ({
   label,
   isPassword,
-  register,
   placeholder,
   name,
-  errors,
   value,
   onChange,
+  errors,
 }) => {
   const [toggle, onToggle] = useState(isPassword);
   return (
@@ -21,11 +20,8 @@ const InputControl = ({
         <input
           type={toggle ? "password" : "text"}
           placeholder={placeholder}
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
+          onChange={onChange}
           value={value}
-          {...register(name)}
         />
         <div className={styles.icon}>
           {isPassword &&
