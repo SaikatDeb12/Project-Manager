@@ -1,9 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import InputControl from "../InputControl/InputControl";
 import styles from "./auth.module.css";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { auth, updateUserDb } from "../../../firebase";
 import {
   createUserWithEmailAndPassword,
@@ -12,106 +9,143 @@ import {
 import { useState } from "react";
 
 const Auth = ({ signup }) => {
-  const [submitButton, submitButtonDisabled] = useState(false);
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const loginSchema = z.object({
-    email: z.string().email({ message: "Invalid email" }),
-    password: z
-      .string()
-      .min(4, { message: "Password must be atleast 4 characters" }),
-  });
+  const validateForm = () => {
+    const newErrors = {};
 
-  const signupSchema = z.object({
-    name: z.string().min(1, { message: "Required name" }),
-    email: z.string().email({ message: "Invalid email" }),
-    password: z
-      .string()
-      .min(4, { message: "Password must be atleast 4 characters" }),
-  });
+    if (signup && !formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
 
-  const schema = signup ? signupSchema : loginSchema;
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: zodResolver(schema) });
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 4) {
+      newErrors.password = "Password must be at least 4 characters";
+    }
 
-  const mySubmit = (data) => {
-    if (signup) handleSignup(data);
-    else handleLogin(data);
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleSignup = async (data) => {
-    submitButtonDisabled(true);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setSubmitButtonDisabled(true);
+    try {
+      if (signup) {
+        await handleSignup();
+      } else {
+        await handleLogin();
+      }
+    } catch (err) {
+      console.error("Error: ", err);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        general: err.message || "An error occurred",
+      }));
+    } finally {
+      setSubmitButtonDisabled(false);
+    }
+  };
+
+  const handleSignup = async () => {
     const res = await createUserWithEmailAndPassword(
       auth,
-      data.email,
-      data.password
+      formData.email,
+      formData.password
     );
     console.log("Data: ", res);
 
     const userId = res.user.uid;
     await updateUserDb(
       {
-        name: data.name,
+        name: formData.name,
         email: res.user.email,
       },
       userId
     );
-    submitButtonDisabled(false);
     navigate("/login");
   };
 
-  const handleLogin = async (data) => {
-    submitButtonDisabled(true);
-    try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-      console.log("signing in");
-      submitButtonDisabled(false);
-      navigate("/");
-    } catch (err) {
-      console.error("Error: ", err);
-    }
+  const handleLogin = async () => {
+    await signInWithEmailAndPassword(auth, formData.email, formData.password);
+    console.log("signing in");
+    navigate("/");
   };
 
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit(mySubmit)}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <p className={styles.heading}>{signup ? "SignUp" : "Login"}</p>
         {signup && (
           <InputControl
             label={"Name: "}
             placeholder={"Enter your name"}
-            register={register}
             name="name"
+            value={formData.name}
+            onChange={handleInputChange}
             errors={errors.name}
           />
         )}
         <InputControl
           label={"Email: "}
           placeholder={"Enter your email"}
-          register={register}
           name="email"
+          value={formData.email}
+          onChange={handleInputChange}
           errors={errors.email}
         />
         <InputControl
           label={"Password: "}
           isPassword={true}
           placeholder={"Enter the password"}
-          register={register}
           name="password"
+          value={formData.password}
+          onChange={handleInputChange}
           errors={errors.password}
         />
+        {errors.general && (
+          <p style={{ color: "red", marginTop: "10px" }}>{errors.general}</p>
+        )}
         <input
           type="submit"
           className={styles.submit}
-          disabled={submitButton}
+          disabled={submitButtonDisabled}
+          value={signup ? "Sign Up" : "Login"}
         />
         {signup ? (
           <>
-            <span>Already have a account? </span>
+            <span>Already have an account? </span>
             <Link
               className={styles.link}
               style={{ color: "rgb(14, 63, 212)" }}
@@ -122,7 +156,7 @@ const Auth = ({ signup }) => {
           </>
         ) : (
           <>
-            <span>Don't have a account? </span>
+            <span>Don't have an account? </span>
             <Link
               className={styles.link}
               style={{ color: "rgb(14, 63, 212)" }}
