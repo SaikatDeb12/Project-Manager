@@ -87,6 +87,7 @@
   justify-content: end;
   padding-top: 10px;
 }
+
 .save button {
   padding: 10px 5px;
   background-color: rgb(69, 145, 251);
@@ -97,4 +98,8 @@
 
 .save button:hover {
   opacity: 0.8;
+}
+
+.save button:disabled {
+  background-color: grey;
 }

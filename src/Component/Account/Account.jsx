@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./account.module.css";
 import { IoLogOutOutline, IoCameraOutline } from "react-icons/io5";
 import InputControl from "../InputControl/InputControl";
@@ -14,7 +14,13 @@ const Account = ({ userDetails }) => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [imageUrl, setImageUrl] = useState(null);
   const [error, setError] = useState(null);
-
+  const [userProfileDetails, setUserProfileDetails] = useState({
+    name: userDetails.name,
+    designation: userDetails.designation || "",
+    github: userDetails.github || "",
+    linkedin: userDetails.linkedin || "",
+  });
+  const [saveDetails, setSaveDetails] = useState(true);
   const mySubmit = (data) => {
     console.log(data);
   };
@@ -94,7 +100,9 @@ const Account = ({ userDetails }) => {
             )}
             {error && <p style={{ color: "red" }}>{error}</p>}
             {imageUrl && uploadProgress === 0 && (
-              <p style={{ color: "green" }}>Image uploaded successfully!</p>
+              <p style={{ color: "rgb(3, 227, 3)" }}>
+                Image uploaded successfully!
+              </p>
             )}
           </div>
           <div className={styles.right}>
@@ -103,9 +111,17 @@ const Account = ({ userDetails }) => {
                 <InputControl
                   label={"Name"}
                   isPassword={false}
-                  placeholder={userDetails.name}
+                  placeholder={"Enter your name"}
                   name={"name"}
                   register={register}
+                  value={userProfileDetails.name}
+                  onChange={(event) => {
+                    setSaveDetails(false);
+                    setUserProfileDetails((prevVal) => ({
+                      ...prevVal,
+                      name: event.target.value,
+                    }));
+                  }}
                 />
                 <InputControl
                   label={"Title"}
@@ -113,6 +129,14 @@ const Account = ({ userDetails }) => {
                   placeholder={"eg. Full stack developer"}
                   name={"title"}
                   register={register}
+                  value={userProfileDetails.designation}
+                  onChange={(event) => {
+                    setSaveDetails(false);
+                    setUserProfileDetails((prevVal) => ({
+                      ...prevVal,
+                      title: event.target.value,
+                    }));
+                  }}
                 />
               </form>
             </div>
@@ -124,6 +148,14 @@ const Account = ({ userDetails }) => {
                   placeholder={"Enter your github link"}
                   name={"github"}
                   register={register}
+                  value={userProfileDetails.github}
+                  onChange={(event) => {
+                    setSaveDetails(false);
+                    setUserProfileDetails((prevVal) => ({
+                      ...prevVal,
+                      github: event.target.value,
+                    }));
+                  }}
                 />
                 <InputControl
                   label={"LinkedIn"}
@@ -131,11 +163,19 @@ const Account = ({ userDetails }) => {
                   placeholder={"Enter your LinkedIn link"}
                   name={"linkedin"}
                   register={register}
+                  value={userProfileDetails.linkedin}
+                  onChange={(event) => {
+                    setSaveDetails(false);
+                    setUserProfileDetails((prevVal) => ({
+                      ...prevVal,
+                      linkedin: event.target.value,
+                    }));
+                  }}
                 />
               </form>
             </div>
             <div className={styles.save}>
-              <button>Save Changes</button>
+              <button disabled={saveDetails}>Save Changes</button>
             </div>
           </div>
         </div>

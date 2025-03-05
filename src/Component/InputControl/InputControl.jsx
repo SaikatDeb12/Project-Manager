@@ -10,6 +10,8 @@ const InputControl = ({
   placeholder,
   name,
   errors,
+  value,
+  onChange,
 }) => {
   const [toggle, onToggle] = useState(isPassword);
   return (
@@ -19,7 +21,10 @@ const InputControl = ({
         <input
           type={toggle ? "password" : "text"}
           placeholder={placeholder}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => {
+            setText(e.target.value);
+          }}
+          value={value}
           {...register(name)}
         />
         <div className={styles.icon}>
