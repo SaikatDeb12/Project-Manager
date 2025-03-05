@@ -7,7 +7,6 @@ const InputControl = ({
   label,
   isPassword,
   placeholder,
-  name,
   value,
   onChange,
   errors,

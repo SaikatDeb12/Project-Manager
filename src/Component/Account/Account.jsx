@@ -57,7 +57,6 @@ const Account = ({ userDetails }) => {
     e.preventDefault();
     console.log("Saving profile details:", userProfileDetails);
     setSaveDetails(true);
-    // Add logic here to save `userProfileDetails` to your backend or Firebase if needed
   };
 
   return (
@@ -126,7 +125,7 @@ const Account = ({ userDetails }) => {
                   label={"Title"}
                   isPassword={false}
                   placeholder={"eg. Full stack developer"}
-                  name={"designation"} // Changed to match state key
+                  name={"designation"}
                   value={userProfileDetails.designation}
                   onChange={(event) => {
                     setSaveDetails(false);
