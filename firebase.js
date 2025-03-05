@@ -81,7 +81,7 @@ const uploadImage = async (
     );
 
     if (!response.ok) {
-      throw new Error("Upload failed");
+      throw new Error(`Upload failed with status: ${response.status}`);
     }
 
     const data = await response.json();
@@ -89,10 +89,12 @@ const uploadImage = async (
 
     await storeImageUrl(imageUrl);
 
-    progressCallback(100); // Upload complete
-    urlCallback(imageUrl);
+    console.log("updated img link: ", imageUrl); // Debug the URL
+    progressCallback(100); // Indicate completion
+    urlCallback(imageUrl); // Call the success callback with the URL
   } catch (error) {
-    errorCallback(`Error uploading image: ${error.message}`);
+    console.error("Upload failed: ", error.message);
+    errorCallback(`Error uploading image: ${error.message}`); // Only call on actual errors
   }
 };
 
