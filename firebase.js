@@ -89,12 +89,12 @@ const uploadImage = async (
 
     await storeImageUrl(imageUrl);
 
-    console.log("updated img link: ", imageUrl); // Debug the URL
-    progressCallback(100); // Indicate completion
-    urlCallback(imageUrl); // Call the success callback with the URL
+    console.log("updated img link: ", imageUrl);
+    progressCallback(100);
+    urlCallback(imageUrl);
   } catch (error) {
     console.error("Upload failed: ", error.message);
-    errorCallback(`Error uploading image: ${error.message}`); // Only call on actual errors
+    errorCallback(`Error uploading image: ${error.message}`);
   }
 };
 
