@@ -7,6 +7,7 @@ const InputControl = ({
   label,
   isPassword,
   placeholder,
+  name,
   value,
   onChange,
   errors,
@@ -21,6 +22,7 @@ const InputControl = ({
           placeholder={placeholder}
           onChange={onChange}
           value={value}
+          name={name}
         />
         <div className={styles.icon}>
           {isPassword &&

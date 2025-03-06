@@ -49,7 +49,7 @@ const Auth = ({ signup }) => {
     }));
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: "",
+      [name]: "", // Clear the error for this field when typing
     }));
   };
 
@@ -111,28 +111,28 @@ const Auth = ({ signup }) => {
           <InputControl
             label={"Name: "}
             placeholder={"Enter your name"}
-            name="name"
+            name="name" // Add name attribute
             value={formData.name}
             onChange={handleInputChange}
-            errors={errors.name}
+            errors={errors.name} // Pass the error string directly
           />
         )}
         <InputControl
           label={"Email: "}
           placeholder={"Enter your email"}
-          name="email"
+          name="email" // Add name attribute
           value={formData.email}
           onChange={handleInputChange}
-          errors={errors.email}
+          errors={errors.email} // Pass the error string directly
         />
         <InputControl
           label={"Password: "}
           isPassword={true}
           placeholder={"Enter the password"}
-          name="password"
+          name="password" // Add name attribute
           value={formData.password}
           onChange={handleInputChange}
-          errors={errors.password}
+          errors={errors.password} // Pass the error string directly
         />
         {errors.general && (
           <p style={{ color: "red", marginTop: "10px" }}>{errors.general}</p>

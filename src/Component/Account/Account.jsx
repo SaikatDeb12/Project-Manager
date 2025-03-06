@@ -65,8 +65,8 @@ const Account = ({ userDetails }) => {
         <p className={styles.heading}>
           Welcome <span style={{ color: "black" }}>{userDetails.name}</span>
         </p>
-        <div className={styles.logout}>
-          <IoLogOutOutline onClick={handleLogout} /> Logout
+        <div className={styles.logout} onClick={handleLogout}>
+          <IoLogOutOutline /> Logout
         </div>
       </div>
       <input
