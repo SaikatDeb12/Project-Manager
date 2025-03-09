@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { auth, getUserData } from "../firebase";
 import Spinner from "./Component/Spinner/Spinner";
 import Account from "./Component/Account/Account";
+import { signOut } from "firebase/auth";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -15,8 +16,16 @@ function App() {
   const fetchUserDetails = async (uid) => {
     const details = await getUserData(uid);
     console.log("User details: ", details);
-    setIsLoading(true);
+    if (!details) {
+      console.log("User details not found, signing out");
+      await signOut(auth);
+      setIsAuthenticated(false);
+      setUserDetails({});
+      setIsLoading(true);
+      return;
+    }
     setUserDetails(details);
+    setIsLoading(true);
   };
 
   useEffect(() => {

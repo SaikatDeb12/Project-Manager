@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styles from "./account.module.css";
 import { IoLogOutOutline, IoCameraOutline } from "react-icons/io5";
 import InputControl from "../InputControl/InputControl";
-import { auth, uploadImage } from "../../../firebase";
+import { auth, updateUserDb, uploadImage } from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -57,6 +57,10 @@ const Account = ({ userDetails }) => {
     e.preventDefault();
     console.log("Saving profile details:", userProfileDetails);
     setSaveDetails(true);
+  };
+
+  const saveDetailstoDb = () => {
+    updateUserDb();
   };
 
   return (

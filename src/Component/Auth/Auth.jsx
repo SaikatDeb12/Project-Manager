@@ -5,8 +5,10 @@ import { auth, updateUserDb } from "../../../firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { useState } from "react";
+import Spinner from "../Spinner/Spinner";
 
 const Auth = ({ signup }) => {
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
@@ -49,7 +51,7 @@ const Auth = ({ signup }) => {
     }));
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: "", // Clear the error for this field when typing
+      [name]: "",
     }));
   };
 
@@ -94,6 +96,7 @@ const Auth = ({ signup }) => {
       },
       userId
     );
+    await signOut(auth);
     navigate("/login");
   };
 

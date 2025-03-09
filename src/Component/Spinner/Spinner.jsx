@@ -1,6 +1,8 @@
 import React from "react";
+import "./spinner.css";
 const Spinner = () => (
   <svg
+    className="spinner"
     height="64"
     width="64"
     viewBox="0 0 64 64"
