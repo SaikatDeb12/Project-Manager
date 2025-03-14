@@ -59,8 +59,14 @@ const Account = ({ userDetails }) => {
     setSaveDetails(true);
   };
 
-  const saveDetailstoDb = () => {
-    updateUserDb();
+  const saveDetailstoDb = async () => {
+    if (!userProfileDetails.name) {
+      setError("Name required!");
+      return;
+    }
+
+    await updateUserDb({ ...userProfileDetails }, userDetails.uid);
+    setSaveDetails(true);
   };
 
   return (
