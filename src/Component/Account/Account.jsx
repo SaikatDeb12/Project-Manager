@@ -177,7 +177,11 @@ const Account = ({ userDetails }) => {
                 />
               </div>
               <div className={styles.save}>
-                <button type="submit" disabled={saveDetails}>
+                <button
+                  type="submit"
+                  disabled={saveDetails}
+                  onClick={saveDetailstoDb}
+                >
                   Save Changes
                 </button>
               </div>
