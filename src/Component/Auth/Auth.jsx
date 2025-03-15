@@ -114,28 +114,28 @@ const Auth = ({ signup }) => {
           <InputControl
             label={"Name: "}
             placeholder={"Enter your name"}
-            name="name" // Add name attribute
+            name="name"
             value={formData.name}
             onChange={handleInputChange}
-            errors={errors.name} // Pass the error string directly
+            errors={errors.name}
           />
         )}
         <InputControl
           label={"Email: "}
           placeholder={"Enter your email"}
-          name="email" // Add name attribute
+          name="email"
           value={formData.email}
           onChange={handleInputChange}
-          errors={errors.email} // Pass the error string directly
+          errors={errors.email}
         />
         <InputControl
           label={"Password: "}
           isPassword={true}
           placeholder={"Enter the password"}
-          name="password" // Add name attribute
+          name="password"
           value={formData.password}
           onChange={handleInputChange}
-          errors={errors.password} // Pass the error string directly
+          errors={errors.password}
         />
         {errors.general && (
           <p style={{ color: "red", marginTop: "10px" }}>{errors.general}</p>

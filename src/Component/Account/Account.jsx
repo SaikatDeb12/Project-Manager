@@ -44,6 +44,7 @@ const Account = ({ userDetails }) => {
         console.log("Upload complete. URL: ", url);
         setImageUrl(url);
         setUploadProgress(0);
+        updatedProfileImage(url);
       },
       (err) => {
         console.error("Upload error: ", err);
@@ -69,11 +70,18 @@ const Account = ({ userDetails }) => {
     setSaveDetails(true);
   };
 
+  const updatedProfileImage = (url) => {
+    updateUserDb({ ...userProfileDetails, profileImage: url }, userDetails.uid);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <p className={styles.heading}>
-          Welcome <span style={{ color: "black" }}>{userDetails.name}</span>
+          Welcome{" "}
+          <span style={{ color: "black" }}>
+            {userProfileDetails.name || userDetails.name}
+          </span>
         </p>
         <div className={styles.logout} onClick={handleLogout}>
           <IoLogOutOutline /> Logout
@@ -92,10 +100,7 @@ const Account = ({ userDetails }) => {
           <div className={styles.left}>
             <div className={styles.image}>
               <img
-                src={
-                  imageUrl ||
-                  "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQjl3X3QecVwXnMQYLd6ZQfecKfsxGHKK_BJqq0hL6RbvDf64qbPKq7PXVhviV4r3Lbi9VoULPVVIPXRrFRNqWRZMsTeN8ba8NI06oRR9I"
-                }
+                src={imageUrl || userDetails.profileImage}
                 alt="Profile"
                 onError={(e) => console.log("Image load error: ", e)}
               />

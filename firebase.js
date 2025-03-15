@@ -71,7 +71,6 @@ const uploadImage = async (
 
   try {
     progressCallback(50);
-
     const response = await fetch(
       "https://api.cloudinary.com/v1_1/dknw3mf6e/image/upload",
       {
