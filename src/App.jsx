@@ -1,5 +1,10 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Home from "./Component/Home/Home";
 import Auth from "./Component/Auth/Auth";
 import { useEffect, useState } from "react";
@@ -51,19 +56,25 @@ function App() {
               path="/"
               element={<Home isAuthenticated={isAuthenticated} />}
             />
-            {!isAuthenticated && (
-              <>
-                <Route path="/login" element={<Auth signup={false} />} />
-                <Route path="/signup" element={<Auth signup={true} />} />
-              </>
-            )}
-            {isAuthenticated && (
-              <Route
-                path="/account"
-                element={<Account userDetails={userDetails} />}
-              />
-            )}
-            <Route path="*" element={<h1>page not found</h1>} />
+            <Route
+              path="/login"
+              element={!isAuthenticated && <Auth signup={false} />}
+            />
+            <Route
+              path="/signup"
+              element={!isAuthenticated && <Auth signup={true} />}
+            />
+            <Route
+              path="/account"
+              element={
+                isAuthenticated ? (
+                  <Account userDetails={userDetails} />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
+            <Route path="*" element={<p>page not found</p>} />
           </Routes>
         ) : (
           <div className="spinner">

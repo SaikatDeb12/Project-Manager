@@ -28,7 +28,7 @@ const storage = getStorage(app);
 const updateUserDb = async (user, uid) => {
   if (typeof user != "object") return;
   const docRef = doc(db, "users", uid);
-  await setDoc(docRef, { ...user, uid });
+  await setDoc(docRef, { ...user, uid }, { merge: true });
 };
 
 const getUserData = async (uid) => {

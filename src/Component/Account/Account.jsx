@@ -66,7 +66,10 @@ const Account = ({ userDetails }) => {
       return;
     }
 
-    await updateUserDb({ ...userProfileDetails }, userDetails.uid);
+    await updateUserDb(
+      { ...userProfileDetails, email: userDetails.email },
+      userDetails.uid
+    );
     setSaveDetails(true);
   };
 
