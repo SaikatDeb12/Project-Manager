@@ -123,6 +123,11 @@
   color: white;
   border-radius: 5px;
   border: none;
+  cursor: pointer;
+}
+
+.addProject:hover {
+  opacity: 0.8;
 }
 
 .projects {

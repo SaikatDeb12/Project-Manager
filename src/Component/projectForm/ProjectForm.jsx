@@ -31,7 +31,9 @@ const ProjectForm = ({ setShowModal }) => {
           </div>
         </div>
         <div className={styles.footer}>
-          <p className={styles.cancel}>Cancel</p>
+          <p className={styles.cancel} onClick={() => setShowModal(false)}>
+            Cancel
+          </p>
           <button className={styles.submit}>Submit</button>
         </div>
       </Modal>
