@@ -1,9 +1,14 @@
 .container {
   width: 80%;
   padding: 20px;
-  background-color: #ccc;
+  background-color: #e4e4e4;
   margin: 10px;
   border-radius: 10px;
+}
+
+.container:hover {
+  transform: scale(1.02);
+  transition: 200ms;
 }
 
 .project {
@@ -19,4 +24,9 @@
   display: flex;
   font-size: 25px;
   gap: 10px;
+}
+
+.icons:hover {
+  color: rgb(95, 95, 255);
+  transition: 200ms;
 }

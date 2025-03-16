@@ -4,6 +4,7 @@ import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { FaLink } from "react-icons/fa";
 
 const Project = ({ name }) => {
   return (
@@ -11,10 +12,10 @@ const Project = ({ name }) => {
       <div className={styles.project}>
         <div className={styles.name}>{name}</div>
         <div className={styles.connect}>
-          <MdEdit />
-          <MdDelete />
-          <FaGithub />
-          <FaLinkedin />
+          <MdEdit className={styles.icons} />
+          <MdDelete className={styles.icons} />
+          <FaGithub className={styles.icons} />
+          <FaLink className={styles.icons} />
         </div>
       </div>
     </div>
