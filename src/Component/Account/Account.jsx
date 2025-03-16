@@ -5,6 +5,7 @@ import InputControl from "../InputControl/InputControl";
 import { auth, updateUserDb, uploadImage } from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import Project from "../Projects/Project";
 
 const Account = ({ userDetails }) => {
   const navigate = useNavigate();
@@ -97,7 +98,7 @@ const Account = ({ userDetails }) => {
         onChange={handleImageChange}
         accept="image/*"
       />
-      <div className={styles.section}>
+      <div className={styles.profileSection}>
         <div className={styles.title}>Your profile</div>
         <div className={styles.profile}>
           <div className={styles.left}>
@@ -195,6 +196,17 @@ const Account = ({ userDetails }) => {
               </div>
             </form>
           </div>
+        </div>
+      </div>
+      <div className={styles.projectSection}>
+        <div className={styles.projectHeading}>
+          <p>Your Projects</p>
+          <button className={styles.addProject}>Add Projects</button>
+        </div>
+        <div className={styles.projects}>
+          <Project name={"Ecommerce App"} />
+          <Project name={"Google Docs Clone"} />
+          <Project name={"Kanban Board"} />
         </div>
       </div>
     </div>

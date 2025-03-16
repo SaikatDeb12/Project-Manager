@@ -1,0 +1,22 @@
+.container {
+  width: 80%;
+  padding: 20px;
+  background-color: #ccc;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.project {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  font-size: large;
+}
+
+.connect {
+  display: flex;
+  font-size: 25px;
+  gap: 10px;
+}
