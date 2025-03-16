@@ -9,7 +9,7 @@ const ProjectForm = ({ setShowModal }) => {
         <div className={styles.container}>
           <div className={styles.left}>
             <div className={styles.image}>
-              <img src="" alt="thumbnail" />
+              <img src="/sampleProject.jpg" alt="thumbnail" />
               <p>
                 <span>40%</span>Uploaded
               </p>
@@ -20,7 +20,19 @@ const ProjectForm = ({ setShowModal }) => {
           <div className={styles.right}>
             <InputControl label={"Project Title"} />
             <InputControl label={"Project Overview"} />
+            <div className={styles.description}>
+              <div className={styles.top}>
+                <p className={styles.title}>Project Description</p>
+                <p className={styles.link}>+Add points</p>
+              </div>
+              <InputControl />
+              <InputControl />
+            </div>
           </div>
+        </div>
+        <div className={styles.footer}>
+          <p className={styles.cancel}>Cancel</p>
+          <button className={styles.submit}>Submit</button>
         </div>
       </Modal>
     </div>

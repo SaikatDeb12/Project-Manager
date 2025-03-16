@@ -1,0 +1,43 @@
+.container {
+  width: 100%;
+  display: flex;
+  padding: 10px;
+  gap: 30px;
+}
+
+.image img {
+  width: 200px;
+  height: 200px;
+  padding: 10px 0;
+}
+
+.left {
+  padding: 10px 0;
+}
+
+.image p {
+  padding-bottom: 20px;
+}
+
+.right {
+  padding: 20px 0;
+}
+
+.link {
+  color: rgb(30, 30, 255);
+}
+
+.footer {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 15px;
+}
+
+.submit {
+  padding: 10px 5px;
+  background-color: rgb(69, 145, 251);
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
