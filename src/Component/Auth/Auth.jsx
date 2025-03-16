@@ -93,6 +93,7 @@ const Auth = ({ signup }) => {
       {
         name: formData.name,
         email: res.user.email,
+        profileImage: "/defaultAvatar.jpg",
       },
       userId
     );
