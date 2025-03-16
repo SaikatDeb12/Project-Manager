@@ -6,6 +6,7 @@ import { auth, updateUserDb, uploadImage } from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Project from "../Projects/Project";
+import Modal from "../Modal/Modal";
 
 const Account = ({ userDetails }) => {
   const navigate = useNavigate();
@@ -80,6 +81,7 @@ const Account = ({ userDetails }) => {
 
   return (
     <div className={styles.container}>
+      <Modal onClose={()=>console.log("closing modal")}>Hello</Modal>
       <div className={styles.header}>
         <p className={styles.heading}>
           Welcome{" "}
