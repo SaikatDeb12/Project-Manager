@@ -7,6 +7,7 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Project from "../Projects/Project";
 import Modal from "../Modal/Modal";
+import ProjectForm from "../projectForm/ProjectForm";
 
 const Account = ({ userDetails }) => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Account = ({ userDetails }) => {
     linkedin: userDetails.linkedin || "",
   });
   const [saveDetails, setSaveDetails] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -81,7 +83,7 @@ const Account = ({ userDetails }) => {
 
   return (
     <div className={styles.container}>
-      <Modal onClose={()=>console.log("closing modal")}>Hello</Modal>
+      {showModal && <ProjectForm setShowModal={setShowModal} />}
       <div className={styles.header}>
         <p className={styles.heading}>
           Welcome{" "}
@@ -203,7 +205,12 @@ const Account = ({ userDetails }) => {
       <div className={styles.projectSection}>
         <div className={styles.projectHeading}>
           <p>Your Projects</p>
-          <button className={styles.addProject}>Add Projects</button>
+          <button
+            className={styles.addProject}
+            onClick={() => setShowModal(true)}
+          >
+            Add Projects
+          </button>
         </div>
         <div className={styles.projects}>
           <Project name={"Ecommerce App"} />
