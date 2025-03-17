@@ -3,6 +3,8 @@
   display: flex;
   padding: 10px;
   gap: 30px;
+  max-height: 60vh;
+  overflow: hidden;
 }
 
 .image img {
@@ -33,6 +35,25 @@
 .link {
   color: rgb(30, 30, 255);
   cursor: pointer;
+}
+
+.description {
+  max-height: 230px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.description::-webkit-scrollbar {
+  width: 8px;
+}
+
+.description::-webkit-scrollbar-track {
+  background-color: white;
+}
+
+.description::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 5px;
 }
 
 .footer {
