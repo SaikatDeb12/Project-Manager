@@ -11,6 +11,18 @@ const ProjectForm = ({ setShowModal }) => {
     link: "",
     points: ["this", "is", "sample", "project", "another", "something"],
   });
+
+  const handleDescription = (index, value) => {
+    const temp = [...values.points];
+    temp[index] = value;
+    setValues((prevVal) => ({ ...prevVal, points: temp }));
+  };
+
+  const handleAddPoints = () => {
+    const temp = [...values.points];
+    temp.push("");
+    setValues((prevVal) => ({ ...prevVal, points: temp }));
+  };
   return (
     <div>
       <Modal onClose={() => setShowModal(false)}>
@@ -71,10 +83,18 @@ const ProjectForm = ({ setShowModal }) => {
             <div className={styles.description}>
               <div className={styles.top}>
                 <p className={styles.title}>Project Description</p>
-                <p className={styles.link}>+Add points</p>
+                <p className={styles.link} onClick={() => handleAddPoints()}>
+                  +Add points
+                </p>
               </div>
-              {values.points.map((item, key) => (
-                <InputControl value={item} isPassword={false} key={key} />
+              {values.points.map((item, index) => (
+                <InputControl
+                  value={item}
+                  isPassword={false}
+                  onChange={(event) =>
+                    handleDescription(index, event.target.value)
+                  }
+                />
               ))}
             </div>
           </div>
