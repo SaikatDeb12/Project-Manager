@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Modal from "../Modal/Modal";
 import styles from "./projectForm.module.css";
 import InputControl from "../InputControl/InputControl";
+import { RxCross2 } from "react-icons/rx";
+
 const ProjectForm = ({ setShowModal }) => {
   const [values, setValues] = useState({
     thumbnail: "/sampleProject.jpg",
@@ -19,10 +21,16 @@ const ProjectForm = ({ setShowModal }) => {
   };
 
   const handleAddPoints = () => {
-    const temp = [...values.points];
-    temp.push("");
+    const temp = ["", ...values.points];
     setValues((prevVal) => ({ ...prevVal, points: temp }));
   };
+
+  const handlePointsDelete = (index) => {
+    const temp = [...values.points];
+    temp.splice(index, 1);
+    setValues((prevVal) => ({ ...prevVal, points: temp }));
+  };
+
   return (
     <div>
       <Modal onClose={() => setShowModal(false)}>
@@ -80,22 +88,31 @@ const ProjectForm = ({ setShowModal }) => {
                 }))
               }
             />
-            <div className={styles.description}>
+            <div className={styles.descContainer}>
               <div className={styles.top}>
                 <p className={styles.title}>Project Description</p>
                 <p className={styles.link} onClick={() => handleAddPoints()}>
                   +Add points
                 </p>
               </div>
-              {values.points.map((item, index) => (
-                <InputControl
-                  value={item}
-                  isPassword={false}
-                  onChange={(event) =>
-                    handleDescription(index, event.target.value)
-                  }
-                />
-              ))}
+              <div className={styles.descInput}>
+                {values.points.map((item, index) => (
+                  <div className={styles.description}>
+                    <InputControl
+                      value={item}
+                      isPassword={false}
+                      onChange={(event) =>
+                        handleDescription(index, event.target.value)
+                      }
+                    />
+                    <div className={styles.delete}>
+                      {index > 1 && (
+                        <RxCross2 onClick={() => handlePointsDelete(index)} />
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

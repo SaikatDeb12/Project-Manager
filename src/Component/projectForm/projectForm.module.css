@@ -37,23 +37,33 @@
   cursor: pointer;
 }
 
-.description {
+.descContainer {
   max-height: 230px;
   overflow-y: auto;
   padding-right: 10px;
 }
 
-.description::-webkit-scrollbar {
+.descContainer::-webkit-scrollbar {
   width: 8px;
 }
 
-.description::-webkit-scrollbar-track {
+.descContainer::-webkit-scrollbar-track {
   background-color: white;
 }
 
-.description::-webkit-scrollbar-thumb {
+.descContainer::-webkit-scrollbar-thumb {
   background-color: #ccc;
   border-radius: 5px;
+}
+
+.description {
+  display: flex;
+  align-items: center;
+}
+
+.delete {
+  font-size: large;
+  padding: 5px;
 }
 
 .footer {
