@@ -11,7 +11,7 @@ const ProjectForm = ({ setShowModal }) => {
     overview: "",
     github: "",
     link: "",
-    points: ["this", "is", "sample", "project", "another", "something"],
+    points: ["", ""],
   });
 
   const handleDescription = (index, value) => {
@@ -44,6 +44,7 @@ const ProjectForm = ({ setShowModal }) => {
             </div>
             <InputControl
               label={"GitHub"}
+              placeholder={"Project repository link"}
               value={values.github}
               isPassword={false}
               onChange={(event) =>
@@ -55,6 +56,7 @@ const ProjectForm = ({ setShowModal }) => {
             />
             <InputControl
               label={"Deployed Link"}
+              placeholder={"Project deployed link"}
               value={values.link}
               isPassword={false}
               onChange={(event) =>
@@ -68,6 +70,7 @@ const ProjectForm = ({ setShowModal }) => {
           <div className={styles.right}>
             <InputControl
               label={"Project Title"}
+              placeholder={"Enter project title"}
               value={values.title}
               isPassword={false}
               onChange={(event) =>
@@ -79,6 +82,7 @@ const ProjectForm = ({ setShowModal }) => {
             />
             <InputControl
               label={"Project Overview"}
+              placeholder={"Project's breif overview"}
               value={values.overview}
               isPassword={false}
               onChange={(event) =>
@@ -99,6 +103,7 @@ const ProjectForm = ({ setShowModal }) => {
                 {values.points.map((item, index) => (
                   <div className={styles.description}>
                     <InputControl
+                      placeholder={"Type something..."}
                       value={item}
                       isPassword={false}
                       onChange={(event) =>
