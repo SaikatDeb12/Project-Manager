@@ -1,7 +1,18 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  CollectionReference,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import {
   getDownloadURL,
   getStorage,
@@ -24,6 +35,30 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
+
+const addProjectInDb = async (project) => {
+  if (typeof project != "object") return;
+  const colRef = collection(db, "projects");
+  await addDoc(colRef, { ...project });
+};
+
+const updateProjectInDb = async (project, pid) => {
+  if (typeof project != "object") return;
+  const docRef = doc(db, "projects", pid);
+  await setDoc(docRef, { ...project });
+};
+
+const getAllProjects = async () => {
+  return await getDocs(collection(db, "projects"));
+};
+
+const fetchProjectDetails = async (uid) => {
+  if (!uid) return;
+  const colRef = collection(db, "projects");
+  const condition = where("refUser", "==", uid);
+  const dbQuery = query(colRef, condition);
+  return await getDoc(dbQuery);
+};
 
 const updateUserDb = async (user, uid) => {
   if (typeof user != "object") return;
@@ -110,4 +145,15 @@ const storeImageUrl = async (url) => {
   }
 };
 
-export { app as default, auth, db, updateUserDb, getUserData, uploadImage };
+export {
+  app as default,
+  auth,
+  db,
+  updateUserDb,
+  getUserData,
+  uploadImage,
+  addProjectInDb,
+  getAllProjects,
+  fetchProjectDetails,
+  updateProjectInDb,
+};

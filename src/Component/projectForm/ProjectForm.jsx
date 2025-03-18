@@ -3,9 +3,13 @@ import Modal from "../Modal/Modal";
 import styles from "./projectForm.module.css";
 import InputControl from "../InputControl/InputControl";
 import { RxCross2 } from "react-icons/rx";
-import { uploadImage } from "../../../firebase";
+import {
+  addProjectInDb,
+  fetchProjectDetails,
+  uploadImage,
+} from "../../../firebase";
 
-const ProjectForm = ({ setShowModal }) => {
+const ProjectForm = ({ setShowModal, uid }) => {
   const [values, setValues] = useState({
     thumbnail: "/sampleProject.jpg",
     title: "",
@@ -86,12 +90,16 @@ const ProjectForm = ({ setShowModal }) => {
     return true;
   };
 
-  const handleModalSubmit = () => {
+  const [modalSubmitDisabled, setModalSubmitDisabled] = useState(false);
+
+  const handleModalSubmit = async () => {
     const result = validateForm();
     if (!result) return;
+    setModalSubmitDisabled(true);
+    await addProjectInDb({ ...values, refUser: uid });
+    setModalSubmitDisabled(false);
     setErrors("");
     setShowModal(false);
-    console.log("valid");
   };
 
   return (
@@ -203,7 +211,11 @@ const ProjectForm = ({ setShowModal }) => {
           <p className={styles.cancel} onClick={() => setShowModal(false)}>
             Cancel
           </p>
-          <button className={styles.submit} onClick={() => handleModalSubmit()}>
+          <button
+            className={styles.submit}
+            onClick={() => handleModalSubmit()}
+            disabled={modalSubmitDisabled}
+          >
             Submit
           </button>
         </div>

@@ -1,8 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./account.module.css";
 import { IoLogOutOutline, IoCameraOutline } from "react-icons/io5";
 import InputControl from "../InputControl/InputControl";
-import { auth, updateUserDb, uploadImage } from "../../../firebase";
+import {
+  auth,
+  getAllProjects,
+  updateUserDb,
+  uploadImage,
+} from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Project from "../Projects/Project";
@@ -81,9 +86,20 @@ const Account = ({ userDetails }) => {
     updateUserDb({ ...userProfileDetails, profileImage: url }, userDetails.uid);
   };
 
+  const fetchAllProjects = async () => {
+    const res = await getAllProjects();
+    console.log("response", res);
+  };
+
+  useEffect(() => {
+    fetchAllProjects();
+  }, []);
+
   return (
     <div className={styles.container}>
-      {showModal && <ProjectForm setShowModal={setShowModal} />}
+      {showModal && (
+        <ProjectForm setShowModal={setShowModal} uid={userDetails.uid} />
+      )}
       <div className={styles.header}>
         <p className={styles.heading}>
           Welcome{" "}

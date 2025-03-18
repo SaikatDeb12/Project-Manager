@@ -94,3 +94,7 @@
 .cancel:hover {
   cursor: pointer;
 }
+
+.submit:disabled {
+  background-color: grey;
+}
