@@ -3,6 +3,7 @@ import Modal from "../Modal/Modal";
 import styles from "./projectForm.module.css";
 import InputControl from "../InputControl/InputControl";
 import { RxCross2 } from "react-icons/rx";
+import { uploadImage } from "../../../firebase";
 
 const ProjectForm = ({ setShowModal }) => {
   const [values, setValues] = useState({
@@ -33,9 +34,33 @@ const ProjectForm = ({ setShowModal }) => {
   };
 
   const fileRef = useRef();
+  const [errors, setErrors] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [imageUrl, setImageUrl] = useState(null);
 
   const handleFileUpload = (event) => {
-    console.log(event.target.files[0]);
+    // console.log(event.target.files[0]);
+    const file = event.target.files[0];
+    if (!file) return;
+    setErrors(null);
+    setUploadProgress(0);
+    setImageUrl(null);
+
+    uploadImage(
+      file,
+      (progress) => {
+        setUploadProgress(progress);
+      },
+      (url) => {
+        setImageUrl(url);
+        setUploadProgress(0);
+        setValues((prevVal) => ({ ...prevVal, thumbnail: url }));
+      },
+      (error) => {
+        setErrors(error);
+        setUploadProgress(0);
+      }
+    );
   };
 
   return (
@@ -56,7 +81,7 @@ const ProjectForm = ({ setShowModal }) => {
                 onClick={() => fileRef.current.click()}
               />
               <p>
-                <span>40%</span>Uploaded
+                <span>{uploadProgress}%</span>Uploaded
               </p>
             </div>
             <InputControl
@@ -138,6 +163,7 @@ const ProjectForm = ({ setShowModal }) => {
             </div>
           </div>
         </div>
+        <div className={styles.error}>{errors}</div>
         <div className={styles.footer}>
           <p className={styles.cancel} onClick={() => setShowModal(false)}>
             Cancel

@@ -14,7 +14,7 @@ const Account = ({ userDetails }) => {
   const imagePicker = useRef();
   const [uploadProgress, setUploadProgress] = useState(0);
   const [imageUrl, setImageUrl] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setErrors] = useState(null);
   const [userProfileDetails, setUserProfileDetails] = useState({
     name: userDetails.name,
     designation: userDetails.designation || "",
@@ -34,7 +34,7 @@ const Account = ({ userDetails }) => {
     if (!file) return;
 
     console.log("File selected: ", file.name, file.type, file.size);
-    setError(null);
+    setErrors(null);
     setUploadProgress(0);
     setImageUrl(null);
 
@@ -52,7 +52,7 @@ const Account = ({ userDetails }) => {
       },
       (err) => {
         console.error("Upload error: ", err);
-        setError(err);
+        setErrors(err);
         setUploadProgress(0);
       }
     );
@@ -66,7 +66,7 @@ const Account = ({ userDetails }) => {
 
   const saveDetailstoDb = async () => {
     if (!userProfileDetails.name) {
-      setError("Name required!");
+      setErrors("Name required!");
       return;
     }
 
