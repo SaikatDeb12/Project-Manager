@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Modal from "../Modal/Modal";
 import styles from "./projectForm.module.css";
 import InputControl from "../InputControl/InputControl";
@@ -11,7 +11,7 @@ const ProjectForm = ({ setShowModal }) => {
     overview: "",
     github: "",
     link: "",
-    points: ["", ""],
+    points: ["first", "second"],
   });
 
   const handleDescription = (index, value) => {
@@ -22,6 +22,7 @@ const ProjectForm = ({ setShowModal }) => {
 
   const handleAddPoints = () => {
     const temp = ["", ...values.points];
+    console.log("value of points array: ", temp);
     setValues((prevVal) => ({ ...prevVal, points: temp }));
   };
 
@@ -31,13 +32,29 @@ const ProjectForm = ({ setShowModal }) => {
     setValues((prevVal) => ({ ...prevVal, points: temp }));
   };
 
+  const fileRef = useRef();
+
+  const handleFileUpload = (event) => {
+    console.log(event.target.files[0]);
+  };
+
   return (
     <div>
       <Modal onClose={() => setShowModal(false)}>
         <div className={styles.container}>
+          <input
+            type="file"
+            ref={fileRef}
+            style={{ display: "none" }}
+            onChange={handleFileUpload}
+          />
           <div className={styles.left}>
             <div className={styles.image}>
-              <img src={values.thumbnail} alt="thumbnail" />
+              <img
+                src={values.thumbnail}
+                alt="thumbnail"
+                onClick={() => fileRef.current.click()}
+              />
               <p>
                 <span>40%</span>Uploaded
               </p>
@@ -101,7 +118,7 @@ const ProjectForm = ({ setShowModal }) => {
               </div>
               <div className={styles.descInput}>
                 {values.points.map((item, index) => (
-                  <div className={styles.description}>
+                  <div className={styles.description} key={index}>
                     <InputControl
                       placeholder={"Type something..."}
                       value={item}
