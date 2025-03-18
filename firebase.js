@@ -85,7 +85,7 @@ const uploadImage = async (
 
     const data = await response.json();
     const imageUrl = data.secure_url;
-
+    progressCallback(70);
     await storeImageUrl(imageUrl);
 
     console.log("updated img link: ", imageUrl);

@@ -34,7 +34,7 @@ const ProjectForm = ({ setShowModal }) => {
   };
 
   const fileRef = useRef();
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -63,6 +63,37 @@ const ProjectForm = ({ setShowModal }) => {
     );
   };
 
+  const validateForm = () => {
+    if (!values.title) {
+      setErrors("Project tile is required!");
+      return false;
+    } else if (!values.overview) {
+      setErrors("Project's overview required!");
+      return false;
+    } else if (!values.github) {
+      setErrors("Project's GitHub url required!");
+      return false;
+    } else if (!values.link) {
+      setErrors("Project's deployed link reuquired!");
+      return false;
+    } else if (!values.points.length) {
+      setErrors("Please add description!");
+      return false;
+    } else if (values.points.length < 2) {
+      setErrors("Minimum 2 description required!");
+      return false;
+    }
+    return true;
+  };
+
+  const handleModalSubmit = () => {
+    const result = validateForm();
+    if (!result) return;
+    setErrors("");
+    setShowModal(false);
+    console.log("valid");
+  };
+
   return (
     <div>
       <Modal onClose={() => setShowModal(false)}>
@@ -80,9 +111,13 @@ const ProjectForm = ({ setShowModal }) => {
                 alt="thumbnail"
                 onClick={() => fileRef.current.click()}
               />
-              <p>
-                <span>{uploadProgress}%</span>Uploaded
-              </p>
+              {uploadProgress > 0 ? (
+                <p>
+                  <span>{uploadProgress}%</span>Uploaded
+                </p>
+              ) : (
+                <p></p>
+              )}
             </div>
             <InputControl
               label={"GitHub"}
@@ -168,7 +203,9 @@ const ProjectForm = ({ setShowModal }) => {
           <p className={styles.cancel} onClick={() => setShowModal(false)}>
             Cancel
           </p>
-          <button className={styles.submit}>Submit</button>
+          <button className={styles.submit} onClick={() => handleModalSubmit()}>
+            Submit
+          </button>
         </div>
       </Modal>
     </div>
