@@ -7,13 +7,25 @@ import { MdDelete } from "react-icons/md";
 import { FaLink } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const Project = ({ name, link, github }) => {
+const Project = ({
+  name,
+  link,
+  github,
+  showModal,
+  projectDetails,
+  handleEditClick,
+}) => {
   return (
     <div className={styles.container}>
       <div className={styles.project}>
         <div className={styles.name}>{name}</div>
         <div className={styles.connect}>
-          <MdEdit className={styles.icons} />
+          <MdEdit
+            className={styles.icons}
+            onClick={() => (
+              showModal(true), projectDetails(), handleEditClick()
+            )}
+          />
           <MdDelete className={styles.icons} />
           {github ? (
             <Link to={`//${github}`} target="_blank">

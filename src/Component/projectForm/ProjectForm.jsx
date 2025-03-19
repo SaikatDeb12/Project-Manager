@@ -9,15 +9,23 @@ import {
   uploadImage,
 } from "../../../firebase";
 
-const ProjectForm = ({ setShowModal, uid, onSubmission }) => {
+const ProjectForm = ({
+  setShowModal,
+  uid,
+  onSubmission,
+  isEdit,
+  initValue,
+}) => {
+  const defaultVal = initValue || {};
   const [values, setValues] = useState({
-    thumbnail: "/sampleProject.jpg",
-    title: "",
-    overview: "",
-    github: "",
-    link: "",
-    points: ["first", "second"],
+    thumbnail: defaultVal.thumbnail || "",
+    title: defaultVal.title || "",
+    overview: defaultVal.overview || "",
+    github: defaultVal.github || "",
+    link: defaultVal.link || "",
+    points: defaultVal.points || ["", ""],
   });
+  const editable = !!isEdit;
 
   const handleDescription = (index, value) => {
     const temp = [...values.points];
@@ -116,7 +124,7 @@ const ProjectForm = ({ setShowModal, uid, onSubmission }) => {
           <div className={styles.left}>
             <div className={styles.image}>
               <img
-                src={values.thumbnail}
+                src={imageUrl || values.thumbnail}
                 alt="thumbnail"
                 onClick={() => fileRef.current.click()}
               />

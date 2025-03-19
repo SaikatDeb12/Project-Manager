@@ -4,6 +4,7 @@ import { IoLogOutOutline, IoCameraOutline } from "react-icons/io5";
 import InputControl from "../InputControl/InputControl";
 import {
   auth,
+  fetchProjectDetails,
   getAllProjects,
   updateUserDb,
   uploadImage,
@@ -96,9 +97,40 @@ const Account = ({ userDetails }) => {
     console.log("response", res);
     setIsProjectLoaded(true);
     const tempProjects = [];
-    res.forEach((doc) => tempProjects.push(doc.data()));
+    res.forEach((doc) => tempProjects.push({ ...doc.data(), pid: doc.id }));
     setProjectList(tempProjects);
     console.log("project list: ", tempProjects);
+  };
+
+  const projectDetails = async () => {
+    try {
+      const snapshot = await fetchProjectDetails(userDetails.uid);
+
+      if (!snapshot || snapshot.empty) {
+        console.log("No matching documents found.");
+        return;
+      }
+
+      const docs = snapshot.docs;
+      console.log("Data present: ");
+      docs.forEach((doc) => console.log(doc.data()));
+    } catch (error) {
+      console.error("Error fetching project details:", error);
+    }
+  };
+
+  const [editProjectModal, setEditProjectModal] = useState(false);
+  const [editableProject, setEditableProject] = useState({});
+  const handleEditClick = (project) => {
+    setEditProjectModal(true);
+    setEditableProject(project);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setEditProjectModal(false);
+    setEditableProject({});
   };
 
   useEffect(() => {
@@ -112,6 +144,8 @@ const Account = ({ userDetails }) => {
           setShowModal={setShowModal}
           uid={userDetails.uid}
           onSubmission={fetchAllProjects}
+          isEdit={editProjectModal}
+          initValue={editableProject}
         />
       )}
       <div className={styles.header}>
@@ -251,6 +285,9 @@ const Account = ({ userDetails }) => {
                     name={item.title}
                     link={item.link}
                     github={item.github}
+                    showModal={setShowModal}
+                    projectDetails={projectDetails}
+                    handleEditClick={() => handleEditClick(item)}
                   />
                 </div>
               ))

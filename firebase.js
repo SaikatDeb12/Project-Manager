@@ -57,7 +57,8 @@ const fetchProjectDetails = async (uid) => {
   const colRef = collection(db, "projects");
   const condition = where("refUser", "==", uid);
   const dbQuery = query(colRef, condition);
-  return await getDoc(dbQuery);
+  const querySnapshot = await getDocs(dbQuery);
+  return querySnapshot;
 };
 
 const updateUserDb = async (user, uid) => {
