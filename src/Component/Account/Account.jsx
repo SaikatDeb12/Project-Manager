@@ -108,7 +108,11 @@ const Account = ({ userDetails }) => {
   return (
     <div className={styles.container}>
       {showModal && (
-        <ProjectForm setShowModal={setShowModal} uid={userDetails.uid} />
+        <ProjectForm
+          setShowModal={setShowModal}
+          uid={userDetails.uid}
+          onSubmission={fetchAllProjects}
+        />
       )}
       <div className={styles.header}>
         <p className={styles.heading}>

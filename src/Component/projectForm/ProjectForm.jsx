@@ -9,7 +9,7 @@ import {
   uploadImage,
 } from "../../../firebase";
 
-const ProjectForm = ({ setShowModal, uid }) => {
+const ProjectForm = ({ setShowModal, uid, onSubmission }) => {
   const [values, setValues] = useState({
     thumbnail: "/sampleProject.jpg",
     title: "",
@@ -100,6 +100,7 @@ const ProjectForm = ({ setShowModal, uid }) => {
     setModalSubmitDisabled(false);
     setErrors("");
     setShowModal(false);
+    onSubmission();
   };
 
   return (
