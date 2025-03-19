@@ -28,19 +28,23 @@ const Project = ({
             )}
           />
           <MdDelete className={styles.icons} />
-          {github ? (
-            <Link to={`//${github}`} target="_blank">
+          {github && (
+            <a
+              href={github.includes("http") ? github : `https://${github}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaGithub className={styles.icons} />
-            </Link>
-          ) : (
-            ""
+            </a>
           )}
-          {link ? (
-            <Link to={`//${link}`} target="_blank">
+          {link && (
+            <a
+              href={link.includes("http") ? link : `https://${link}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaLink className={styles.icons} />
-            </Link>
-          ) : (
-            ""
+            </a>
           )}
         </div>
       </div>
