@@ -6,6 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 import {
   addProjectInDb,
   fetchProjectDetails,
+  updateProjectInDb,
   uploadImage,
 } from "../../../firebase";
 
@@ -15,6 +16,7 @@ const ProjectForm = ({
   onSubmission,
   isEdit,
   initValue,
+  pid,
 }) => {
   const defaultVal = initValue || {};
   const [values, setValues] = useState({
@@ -104,11 +106,20 @@ const ProjectForm = ({
     const result = validateForm();
     if (!result) return;
     setModalSubmitDisabled(true);
-    await addProjectInDb({ ...values, refUser: uid });
-    setModalSubmitDisabled(false);
-    setErrors("");
-    setShowModal(false);
-    onSubmission();
+    try {
+      if (isEdit && pid) {
+        await updateProjectInDb({ ...values, refUser: uid }, pid);
+      } else {
+        await addProjectInDb({ ...values, refUser: uid });
+      }
+      setErrors("");
+      setShowModal(false);
+      onSubmission();
+    } catch (error) {
+      setErrors("Error saving project: " + error.message);
+    } finally {
+      setModalSubmitDisabled(false);
+    }
   };
 
   return (
@@ -125,7 +136,7 @@ const ProjectForm = ({
             <div className={styles.image}>
               <img
                 src={imageUrl || values.thumbnail}
-                alt="thumbnail"
+                alt="click to add thumbnail"
                 onClick={() => fileRef.current.click()}
               />
               {uploadProgress > 0 ? (

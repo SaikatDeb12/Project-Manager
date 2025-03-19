@@ -133,6 +133,11 @@ const Account = ({ userDetails }) => {
     setEditableProject({});
   };
 
+  const handleAddProjectClick = () => {
+    handleCloseModal();
+    setShowModal(true);
+  };
+
   useEffect(() => {
     fetchAllProjects();
   }, []);
@@ -146,6 +151,7 @@ const Account = ({ userDetails }) => {
           onSubmission={fetchAllProjects}
           isEdit={editProjectModal}
           initValue={editableProject}
+          pid={editableProject.pid}
         />
       )}
       <div className={styles.header}>
@@ -269,10 +275,7 @@ const Account = ({ userDetails }) => {
       <div className={styles.projectSection}>
         <div className={styles.projectHeading}>
           <p>Your Projects</p>
-          <button
-            className={styles.addProject}
-            onClick={() => setShowModal(true)}
-          >
+          <button className={styles.addProject} onClick={handleAddProjectClick}>
             Add Projects
           </button>
         </div>
@@ -288,6 +291,7 @@ const Account = ({ userDetails }) => {
                     showModal={setShowModal}
                     projectDetails={projectDetails}
                     handleEditClick={() => handleEditClick(item)}
+                    pid={item.pid}
                   />
                 </div>
               ))

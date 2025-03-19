@@ -14,6 +14,7 @@ const Project = ({
   showModal,
   projectDetails,
   handleEditClick,
+  pid,
 }) => {
   return (
     <div className={styles.container}>

@@ -43,9 +43,15 @@ const addProjectInDb = async (project) => {
 };
 
 const updateProjectInDb = async (project, pid) => {
-  if (typeof project != "object") return;
+  if (typeof project !== "object" || !pid) return;
   const docRef = doc(db, "projects", pid);
-  await setDoc(docRef, { ...project });
+  try {
+    await setDoc(docRef, { ...project }, { merge: true }); // Added merge: true
+    console.log("Project updated successfully:", pid);
+  } catch (error) {
+    console.error("Error updating project:", error);
+    throw error;
+  }
 };
 
 const getAllProjects = async () => {
