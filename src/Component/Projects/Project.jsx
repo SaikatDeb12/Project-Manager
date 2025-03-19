@@ -5,8 +5,9 @@ import { FaLinkedin } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { FaLink } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-const Project = ({ name }) => {
+const Project = ({ name, link, github }) => {
   return (
     <div className={styles.container}>
       <div className={styles.project}>
@@ -14,8 +15,20 @@ const Project = ({ name }) => {
         <div className={styles.connect}>
           <MdEdit className={styles.icons} />
           <MdDelete className={styles.icons} />
-          <FaGithub className={styles.icons} />
-          <FaLink className={styles.icons} />
+          {github ? (
+            <Link to={`//${github}`} target="_blank">
+              <FaGithub className={styles.icons} />
+            </Link>
+          ) : (
+            ""
+          )}
+          {link ? (
+            <Link to={`//${link}`} target="_blank">
+              <FaLink className={styles.icons} />
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

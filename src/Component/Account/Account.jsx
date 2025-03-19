@@ -243,7 +243,11 @@ const Account = ({ userDetails }) => {
             projectList.length > 0 ? (
               projectList.map((item, index) => (
                 <div className={styles.project} key={index}>
-                  <Project name={item.title} />
+                  <Project
+                    name={item.title}
+                    link={item.link}
+                    github={item.github}
+                  />
                 </div>
               ))
             ) : (
