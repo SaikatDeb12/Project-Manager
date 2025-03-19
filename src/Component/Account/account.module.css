@@ -131,9 +131,11 @@
 }
 
 .projects {
+  padding-top: 30px;
+}
+
+.project {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
-  padding-top: 30px;
 }

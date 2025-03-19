@@ -28,6 +28,8 @@ const Account = ({ userDetails }) => {
   });
   const [saveDetails, setSaveDetails] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [isProjectLoaded, setIsProjectLoaded] = useState(false);
+  const [projectList, setProjectList] = useState([]);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -88,7 +90,15 @@ const Account = ({ userDetails }) => {
 
   const fetchAllProjects = async () => {
     const res = await getAllProjects();
+    if (!res) {
+      return;
+    }
     console.log("response", res);
+    setIsProjectLoaded(true);
+    const tempProjects = [];
+    res.forEach((doc) => tempProjects.push(doc.data()));
+    setProjectList(tempProjects);
+    console.log("project list: ", tempProjects);
   };
 
   useEffect(() => {
@@ -229,9 +239,19 @@ const Account = ({ userDetails }) => {
           </button>
         </div>
         <div className={styles.projects}>
-          <Project name={"Ecommerce App"} />
-          <Project name={"Google Docs Clone"} />
-          <Project name={"Kanban Board"} />
+          {isProjectLoaded ? (
+            projectList.length > 0 ? (
+              projectList.map((item, index) => (
+                <div className={styles.project} key={index}>
+                  <Project name={item.title} />
+                </div>
+              ))
+            ) : (
+              <p style={{ color: "black" }}>No projects found!</p>
+            )
+          ) : (
+            <p>Projects not loaded!</p>
+          )}
         </div>
       </div>
     </div>
