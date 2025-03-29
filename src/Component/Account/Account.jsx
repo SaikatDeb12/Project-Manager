@@ -89,17 +89,40 @@ const Account = ({ userDetails }) => {
     updateUserDb({ ...userProfileDetails, profileImage: url }, userDetails.uid);
   };
 
-  const fetchAllProjects = async () => {
-    const res = await getAllProjects();
-    if (!res) {
-      return;
+  // const fetchAllProjects = async () => {
+  //   const res = await getAllProjects();
+  //   if (!res) {
+  //     return;
+  //   }
+  //   console.log("response", res);
+  //   setIsProjectLoaded(true);
+  //   const tempProjects = [];
+  //   res.forEach((doc) => tempProjects.push({ ...doc.data(), pid: doc.id }));
+  //   setProjectList(tempProjects);
+  //   console.log("project list: ", tempProjects);
+  // };
+  const fetchUserProjects = async () => {
+    try {
+      const snapshot = await fetchProjectDetails(userDetails.uid);
+      if (!snapshot || snapshot.empty) {
+        console.log("No projects found for this user.");
+        setIsProjectLoaded(true);
+        setProjectList([]);
+        return;
+      }
+
+      const tempProjects = [];
+      snapshot.forEach((doc) => {
+        tempProjects.push({ ...doc.data(), pid: doc.id });
+      });
+      console.log("User projects: ", tempProjects);
+      setProjectList(tempProjects);
+      setIsProjectLoaded(true);
+    } catch (error) {
+      console.error("Error fetching user projects:", error);
+      setIsProjectLoaded(true);
+      setProjectList([]);
     }
-    console.log("response", res);
-    setIsProjectLoaded(true);
-    const tempProjects = [];
-    res.forEach((doc) => tempProjects.push({ ...doc.data(), pid: doc.id }));
-    setProjectList(tempProjects);
-    console.log("project list: ", tempProjects);
   };
 
   const projectDetails = async () => {
@@ -139,7 +162,7 @@ const Account = ({ userDetails }) => {
   };
 
   useEffect(() => {
-    fetchAllProjects();
+    fetchUserProjects();
   }, []);
 
   return (
@@ -148,7 +171,7 @@ const Account = ({ userDetails }) => {
         <ProjectForm
           setShowModal={setShowModal}
           uid={userDetails.uid}
-          onSubmission={fetchAllProjects}
+          onSubmission={fetchUserProjects}
           isEdit={editProjectModal}
           initValue={editableProject}
           pid={editableProject.pid}

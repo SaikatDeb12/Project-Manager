@@ -5,7 +5,6 @@ import InputControl from "../InputControl/InputControl";
 import { RxCross2 } from "react-icons/rx";
 import {
   addProjectInDb,
-  fetchProjectDetails,
   updateProjectInDb,
   uploadImage,
 } from "../../../firebase";
