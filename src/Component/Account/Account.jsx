@@ -4,6 +4,7 @@ import { IoLogOutOutline, IoCameraOutline } from "react-icons/io5";
 import InputControl from "../InputControl/InputControl";
 import {
   auth,
+  deleteProjectDetails,
   fetchProjectDetails,
   getAllProjects,
   updateUserDb,
@@ -89,18 +90,6 @@ const Account = ({ userDetails }) => {
     updateUserDb({ ...userProfileDetails, profileImage: url }, userDetails.uid);
   };
 
-  // const fetchAllProjects = async () => {
-  //   const res = await getAllProjects();
-  //   if (!res) {
-  //     return;
-  //   }
-  //   console.log("response", res);
-  //   setIsProjectLoaded(true);
-  //   const tempProjects = [];
-  //   res.forEach((doc) => tempProjects.push({ ...doc.data(), pid: doc.id }));
-  //   setProjectList(tempProjects);
-  //   console.log("project list: ", tempProjects);
-  // };
   const fetchUserProjects = async () => {
     try {
       const snapshot = await fetchProjectDetails(userDetails.uid);
@@ -148,6 +137,11 @@ const Account = ({ userDetails }) => {
     setEditProjectModal(true);
     setEditableProject(project);
     setShowModal(true);
+  };
+
+  const handleDeleteClick = async (pid) => {
+    await deleteProjectDetails(pid);
+    fetchUserProjects();
   };
 
   const handleCloseModal = () => {
@@ -314,12 +308,13 @@ const Account = ({ userDetails }) => {
                     showModal={setShowModal}
                     projectDetails={projectDetails}
                     handleEditClick={() => handleEditClick(item)}
+                    handleDeleteClick={() => handleDeleteClick(item.pid)}
                     pid={item.pid}
                   />
                 </div>
               ))
             ) : (
-              <p style={{ color: "black" }}>No projects found!</p>
+              <p style={{ color: "#e4e4e4" }}>No projects found!</p>
             )
           ) : (
             <p>Projects not loaded!</p>

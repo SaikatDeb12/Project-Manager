@@ -14,6 +14,7 @@ const Project = ({
   showModal,
   projectDetails,
   handleEditClick,
+  handleDeleteClick,
   pid,
 }) => {
   return (
@@ -27,7 +28,10 @@ const Project = ({
               showModal(true), projectDetails(), handleEditClick()
             )}
           />
-          <MdDelete className={styles.icons} />
+          <MdDelete
+            className={styles.icons}
+            onClick={() => handleDeleteClick()}
+          />
           {github && (
             <a
               href={github.includes("http") ? github : `https://${github}`}

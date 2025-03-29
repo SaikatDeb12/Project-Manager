@@ -5,6 +5,7 @@ import {
   addDoc,
   collection,
   CollectionReference,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -46,7 +47,7 @@ const updateProjectInDb = async (project, pid) => {
   if (typeof project !== "object" || !pid) return;
   const docRef = doc(db, "projects", pid);
   try {
-    await setDoc(docRef, { ...project }, { merge: true }); // Added merge: true
+    await setDoc(docRef, { ...project }, { merge: true });
     console.log("Project updated successfully:", pid);
   } catch (error) {
     console.error("Error updating project:", error);
@@ -65,6 +66,11 @@ const fetchProjectDetails = async (uid) => {
   const dbQuery = query(colRef, condition);
   const querySnapshot = await getDocs(dbQuery);
   return querySnapshot;
+};
+
+const deleteProjectDetails = async (pid) => {
+  const docRef = doc(db, "projects", pid);
+  await deleteDoc(docRef);
 };
 
 const updateUserDb = async (user, uid) => {
@@ -163,4 +169,5 @@ export {
   getAllProjects,
   fetchProjectDetails,
   updateProjectInDb,
+  deleteProjectDetails,
 };
