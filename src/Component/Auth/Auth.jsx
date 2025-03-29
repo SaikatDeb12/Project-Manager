@@ -1,152 +1,124 @@
-import { Link, useNavigate } from "react-router-dom";
-import InputControl from "../InputControl/InputControl";
+import React, { useState } from "react";
 import styles from "./auth.module.css";
-import { auth, updateUserDb } from "../../../firebase";
+import InputControl from "../InputControl/InputControl";
+import { Link, useNavigate } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { useState } from "react";
-import Spinner from "../Spinner/Spinner";
+import { auth, updateUserDb } from "../../../firebase";
 
-const Auth = ({ signup }) => {
-  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
-  const [formData, setFormData] = useState({
+function Auth({ signup }) {
+  const [values, setValues] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
+
   const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("");
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (signup && !formData.name.trim()) {
-      newErrors.name = "Name is required";
+  const handleLogin = () => {
+    if (!values.email || !values.password) {
+      setErrorMsg("All fields are required!");
+      return;
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Invalid email format";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 4) {
-      newErrors.password = "Password must be at least 4 characters";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    signInWithEmailAndPassword(auth, values.email, values.password)
+      .then(() => {
+        setSubmitButtonDisabled(false);
+        navigate("/");
+      })
+      .catch((err) => {
+        setSubmitButtonDisabled(false);
+        setErrorMsg(err.message);
+      });
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: "",
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
+  const handleSignup = async () => {
+    if (!values.name || !values.email || !values.password) {
+      setErrorMsg("All fields are required!");
       return;
     }
 
     setSubmitButtonDisabled(true);
+    setErrorMsg("");
+
     try {
-      if (signup) {
-        await handleSignup();
-      } else {
-        await handleLogin();
-      }
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      const userId = res.user.uid;
+
+      await updateUserDb(
+        {
+          name: values.name,
+          email: values.email,
+          profileImage: "/defaultAvatar.jpg",
+        },
+        userId
+      );
+      await signOut(auth);
+      navigate("/login");
     } catch (err) {
-      console.error("Error: ", err);
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        general: err.message || "An error occurred",
-      }));
+      setErrorMsg(err.message);
     } finally {
       setSubmitButtonDisabled(false);
     }
   };
 
-  const handleSignup = async () => {
-    const res = await createUserWithEmailAndPassword(
-      auth,
-      formData.email,
-      formData.password
-    );
-    console.log("Data: ", res);
-
-    const userId = res.user.uid;
-    await updateUserDb(
-      {
-        name: formData.name,
-        email: res.user.email,
-        profileImage: "/defaultAvatar.jpg",
-      },
-      userId
-    );
-    await signOut(auth);
-    navigate("/login");
-  };
-
-  const handleLogin = async () => {
-    await signInWithEmailAndPassword(auth, formData.email, formData.password);
-    console.log("signing in");
-    navigate("/");
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (signup) {
+      handleSignup();
+    } else {
+      handleLogin();
+    }
   };
 
   return (
     <div className={styles.container}>
+      <div className={styles.header}>
+        <p>
+          <Link className={styles.smallLink} to={"/"}>
+            {"< Back to home"}
+          </Link>
+        </p>
+      </div>
       <form className={styles.form} onSubmit={handleSubmit}>
         <p className={styles.heading}>{signup ? "SignUp" : "Login"}</p>
         {signup && (
           <InputControl
-            label={"Name: "}
+            label={"Name"}
             placeholder={"Enter your name"}
             name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            errors={errors.name}
+            value={values.name}
+            onChange={(e) => setValues({ ...values, name: e.target.value })}
           />
         )}
         <InputControl
-          label={"Email: "}
+          label={"Email"}
           placeholder={"Enter your email"}
           name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          errors={errors.email}
+          value={values.email}
+          onChange={(e) => setValues({ ...values, email: e.target.value })}
         />
         <InputControl
-          label={"Password: "}
-          isPassword={true}
-          placeholder={"Enter the password"}
+          label={"Password"}
+          placeholder={"Enter password"}
           name="password"
-          value={formData.password}
-          onChange={handleInputChange}
-          errors={errors.password}
+          isPassword
+          value={values.password}
+          onChange={(e) => setValues({ ...values, password: e.target.value })}
         />
-        {errors.general && (
-          <p style={{ color: "red", marginTop: "10px" }}>{errors.general}</p>
-        )}
-        <input
-          type="submit"
-          className={styles.submit}
-          disabled={submitButtonDisabled}
-          value={signup ? "Sign Up" : "Login"}
-        />
+        <p className={styles.error}>{errorMsg}</p>
+        <button className={styles.submit} disabled={submitButtonDisabled}>
+          {signup ? "SignUp" : "Login"}
+        </button>
         {signup ? (
           <>
             <span>Already have an account? </span>
@@ -173,6 +145,6 @@ const Auth = ({ signup }) => {
       </form>
     </div>
   );
-};
+}
 
 export default Auth;

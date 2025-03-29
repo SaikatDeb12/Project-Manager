@@ -1,14 +1,30 @@
 .container {
   height: 100vh;
+  width: 100vw;
   background: linear-gradient(
     to bottom right,
     rgb(14, 129, 212),
     rgb(23, 24, 84)
   );
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: large;
+}
+
+.header {
+  width: 30vw;
+  padding: 10px;
+}
+
+.smallLink {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  color: white;
+  cursor: pointer;
 }
 
 .heading {
@@ -49,4 +65,9 @@
 
 .link {
   cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-weight: 500;
 }
