@@ -6,14 +6,12 @@ import {
   auth,
   deleteProjectDetails,
   fetchProjectDetails,
-  getAllProjects,
   updateUserDb,
   uploadImage,
 } from "../../../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Project from "../Projects/Project";
-import Modal from "../Modal/Modal";
 import ProjectForm from "../projectForm/ProjectForm";
 
 const Account = ({ userDetails }) => {

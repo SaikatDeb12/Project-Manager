@@ -4,7 +4,6 @@ import { getAuth } from "firebase/auth";
 import {
   addDoc,
   collection,
-  CollectionReference,
   deleteDoc,
   doc,
   getDoc,
@@ -14,13 +13,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,

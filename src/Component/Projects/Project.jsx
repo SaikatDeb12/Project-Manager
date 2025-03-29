@@ -1,11 +1,9 @@
 import React from "react";
 import styles from "./project.module.css";
 import { FaGithub } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { FaLink } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 const Project = ({
   name,
