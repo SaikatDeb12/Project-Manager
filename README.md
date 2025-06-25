@@ -1,6 +1,8 @@
 ![](https://res.cloudinary.com/dknw3mf6e/image/upload/v1750844722/Screenshot_300_iaz4vu.png)
 ![](https://res.cloudinary.com/dknw3mf6e/image/upload/v1750844870/Screenshot_301_tcpwxd.png)
 ![](https://res.cloudinary.com/dknw3mf6e/image/upload/v1750844895/Screenshot_302_ecsl6x.png)
+![](https://res.cloudinary.com/dknw3mf6e/image/upload/v1750846798/Screenshot_347_kaht7j.png)
+![](https://res.cloudinary.com/dknw3mf6e/image/upload/v1750846821/Screenshot_348_ffm2h1.png)
 
 
 # 📋 Project Manager – Centralized Project Management Platform
