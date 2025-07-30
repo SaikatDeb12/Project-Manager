@@ -17,7 +17,7 @@ const Home = ({ isAuthenticated }) => {
           <p className={styles.desc}>
             One stop destination for all software development projects
           </p>
-          <button onClick={handleNavigate}>
+          <button className={styles.getStarted} onClick={handleNavigate}>
             {isAuthenticated ? "Manage Your Projects" : "Get Started"}
             <FaArrowRightLong className={styles.icon} />
           </button>
